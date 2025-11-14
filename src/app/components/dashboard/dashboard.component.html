@@ -1,0 +1,17 @@
+<div class="container dashboard">
+  <h1>Panel de Control</h1>
+  <p>Bienvenido a tu cuenta</p>
+
+  <div *ngIf="user" class="user-info">
+    <h2>Información del Usuario</h2>
+    <p><strong>Nombre:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>ID:</strong> {{ user.id }}</p>
+    <p><strong>Estado:</strong> {{ user.is_active ? 'Activo' : 'Inactivo' }}</p>
+    <p><strong>Fecha de registro:</strong> {{ user.date_joined | date:'medium' }}</p>
+  </div>
+
+  <button type="button" class="btn-primary" (click)="logout()">
+    Cerrar Sesión
+  </button>
+</div>

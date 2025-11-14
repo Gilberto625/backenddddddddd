@@ -1,0 +1,40 @@
+<div class="container">
+  <h1>Verificación 2FA</h1>
+  <p>Ingresa el código de 6 dígitos que enviamos a tu email</p>
+
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="attemptsLeft < 5 && attemptsLeft > 0" class="alert alert-info">
+    Intentos restantes: {{ attemptsLeft }}
+  </div>
+
+  <div class="code-input">
+    <input
+      *ngFor="let digit of code; let i = index"
+      [id]="'code-' + i"
+      type="text"
+      maxlength="1"
+      [(ngModel)]="code[i]"
+      (input)="onCodeInput(i, $event)"
+      (keydown)="onKeyDown(i, $event)"
+      [disabled]="isLoading"
+      pattern="[0-9]"
+    />
+  </div>
+
+  <button
+    type="button"
+    class="btn-primary"
+    (click)="verifyCode()"
+    [disabled]="isLoading || code.some(d => !d)"
+  >
+    <span *ngIf="!isLoading">Verificar</span>
+    <span *ngIf="isLoading" class="loading"></span>
+  </button>
+
+  <div class="link">
+    <a routerLink="/login">Volver al inicio de sesión</a>
+  </div>
+</div>

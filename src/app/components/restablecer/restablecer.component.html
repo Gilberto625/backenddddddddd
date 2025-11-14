@@ -1,0 +1,63 @@
+<div class="container">
+  <h1>Restablecer Contraseña</h1>
+  <p>Ingresa el código que recibiste y tu nueva contraseña</p>
+
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="codigo">Código de Verificación</label>
+      <input
+        type="text"
+        id="codigo"
+        name="codigo"
+        [(ngModel)]="codigo"
+        placeholder="123456"
+        required
+        [disabled]="isLoading"
+        maxlength="6"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="newPassword">Nueva Contraseña</label>
+      <input
+        type="password"
+        id="newPassword"
+        name="newPassword"
+        [(ngModel)]="newPassword"
+        placeholder="••••••••"
+        required
+        [disabled]="isLoading"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">Confirmar Nueva Contraseña</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        name="confirmPassword"
+        [(ngModel)]="confirmPassword"
+        placeholder="••••••••"
+        required
+        [disabled]="isLoading"
+      />
+    </div>
+
+    <button type="submit" class="btn-primary" [disabled]="isLoading">
+      <span *ngIf="!isLoading">Restablecer Contraseña</span>
+      <span *ngIf="isLoading" class="loading"></span>
+    </button>
+  </form>
+
+  <div class="link">
+    <a routerLink="/login">Volver al inicio de sesión</a>
+  </div>
+</div>
