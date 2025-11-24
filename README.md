@@ -6,16 +6,32 @@ Backend desarrollado con Django 5.2.7 que proporciona autenticación completa co
 - Autenticación con Google (Firebase)
 - Recuperación de contraseña
 - CORS configurado para Angular frontend
+- **LISTO PARA PRODUCCIÓN EN RENDER**
+
+## 🆕 Actualizaciones Importantes (Versión Producción)
+
+**✅ PROBLEMA RESUELTO:** El 2FA ahora funciona correctamente en Render
+
+**Cambios implementados:**
+- ✅ Sesiones persistentes en PostgreSQL (antes se perdían en memoria)
+- ✅ Configuración de producción con WhiteNoise para archivos estáticos
+- ✅ Credenciales movidas a variables de entorno (sin hardcodear)
+- ✅ Seguridad mejorada: HSTS, SSL redirect, security headers
+- ✅ Base de datos PostgreSQL para producción (SQLite solo en desarrollo)
 
 ## Características
 
+- ✅ **2 Métodos de Autenticación**: Email/Password + Google OAuth
+- ✅ **2 Métodos de Seguridad**: 2FA por email + Pregunta secreta
 - ✅ Autenticación 2FA mediante código de 6 dígitos por email
 - ✅ Login con Google usando Firebase Authentication
 - ✅ Códigos 2FA con expiración de 5 minutos
 - ✅ Límite de 5 intentos fallidos en verificación 2FA
 - ✅ Recuperación de contraseña con preguntas secretas
-- ✅ CORS configurado para Angular (puerto 4200)
+- ✅ CORS configurado para Angular frontend
 - ✅ Variables de entorno para credenciales sensibles
+- ✅ Sesiones persistentes en base de datos
+- ✅ Listo para despliegue en Render
 
 ## Requisitos
 
@@ -51,24 +67,27 @@ pip install -r requirements.txt
 
 ### 4. Configurar variables de entorno
 
-Copia el archivo `.env.example` a `.env`:
+Crea un archivo `.env` en la raíz del proyecto:
 
 ```bash
 cp .env.example .env
 ```
 
-Edita `.env` con tus credenciales:
+Edita `.env` con tus credenciales (ver `.env.example` para todas las variables disponibles):
 
 ```env
 SECRET_KEY=tu-secret-key-generada
 DEBUG=True
 ALLOWED_HOSTS=localhost,127.0.0.1
 
+# Solo necesario si quieres probar emails en desarrollo
 EMAIL_HOST_USER=tu-email@gmail.com
 EMAIL_HOST_PASSWORD=tu-app-password-de-gmail
 
 CORS_ALLOWED_ORIGINS=http://localhost:4200,http://127.0.0.1:4200
 CSRF_TRUSTED_ORIGINS=http://localhost:4200,http://127.0.0.1:4200
+
+# DATABASE_URL no es necesaria en desarrollo (usa SQLite automáticamente)
 ```
 
 **Nota sobre Gmail App Password:**
@@ -259,10 +278,16 @@ Este backend está configurado para trabajar con un frontend Angular en `http://
 - ✅ Sesiones seguras con HttpOnly cookies
 
 **IMPORTANTE para producción:**
-- Cambiar `DEBUG=False` en `.env`
-- Usar SECRET_KEY fuerte y única
-- Configurar ALLOWED_HOSTS correctamente
-- Usar HTTPS (configurar `SESSION_COOKIE_SECURE=True`)
+- ⚠️ **NUNCA** usar SQLite en producción
+- ⚠️ **NUNCA** dejar `DEBUG=True` en producción
+- ⚠️ **NUNCA** hardcodear credenciales en el código
+- ✅ Configurar PostgreSQL con `DATABASE_URL`
+- ✅ Usar SECRET_KEY fuerte y única
+- ✅ Configurar ALLOWED_HOSTS correctamente
+- ✅ Las sesiones se guardan automáticamente en PostgreSQL
+- ✅ WhiteNoise sirve archivos estáticos automáticamente
+
+**📖 Ver DEPLOYMENT.md para instrucciones completas de despliegue en Render**
 
 ## Troubleshooting
 
